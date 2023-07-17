@@ -1,0 +1,22 @@
+<h2>Liste des classes</h2>
+
+<table class="table align-middle mb-0 bg-white">
+  <thead class="bg-light">
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Classe</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let classe of classes">
+      <td>{{ classe.id }}</td>
+      <td>{{ classe.description }}</td>
+      <td>{{ classe.classeNum }}</td>
+      <td>
+        <button class="btn btn-danger" >Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

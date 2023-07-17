@@ -1,0 +1,31 @@
+<div>
+  <form (ngSubmit)="saveClasse()">
+    <div class="submit-form">
+      
+        
+        <div class="form-group">
+          <label class="form-label" for="nom">Nom :</label>
+          <input matNativeControl class="form-input" id="nom" required [(ngModel)]="Classe.nom" name="nom" [formControl]="text"/>
+          <mat-error *ngIf="text.invalid">{{getErrorMessage()}}</mat-error>
+        </div>
+
+        
+        <div class="form-group">
+          <label class="form-label" for="classeNum">Numéro de classe :</label>
+          <input matNativeControl class="form-input" id="classeNum" required [(ngModel)]="Classe.classeNum" name="classeNum" [formControl]="text" />
+          <mat-error *ngIf="text.invalid">{{getErrorMessage()}}</mat-error>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="description">Description :</label>
+          
+          <textarea matNativeControl class="form-input" id="description" required [(ngModel)]="Classe.description" name="description" [formControl]="text"></textarea>
+          
+        </div>
+        <button type="submit"  class="form-button">Enregistrer</button>
+      </div>
+  
+     
+   
+  </form>
+  </div>
+  

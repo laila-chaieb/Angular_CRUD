@@ -1,0 +1,51 @@
+<div>
+    <div class="submit-form">
+      <div *ngIf="!submitted">
+        
+        <div class="form-group">
+            <label class="form-label"for="code">Code : </label>
+            <input
+            class="form-input"
+              id="code"
+              required
+              [(ngModel)]="Compte.code"
+              name="code"
+            />
+          </div>
+        <div class="form-group">
+          <label class="form-label" for="libele">Libellé:</label>
+          <input
+          class="form-input"
+            id="libele"
+            required
+            [(ngModel)]="Compte.libele"
+            name="libele"
+          />
+        </div>
+       
+          <div>
+            <label class="form-label" for="type_class">Numéro classe</label>
+            <input class="form-input" id="type_class" name="type_class" [(ngModel)]="Compte.type_class" required>
+          </div>
+          <div>
+            <label class="form-label" for="description">Description:</label>
+            <textarea
+              class="form-input"
+              id="description"
+              required
+              [(ngModel)]="Compte.description"
+              name="description"
+            ></textarea>
+          </div>
+          
+          
+        <button center (click)="saveCompte()" class="form-button">Enregistrer</button>
+      </div>
+  
+      <div *ngIf="submitted">
+        <h4>Compte was submitted successfully!</h4>
+        <button class="btn btn-success" (click)="newCompte()">Add</button>
+      </div>
+    </div>
+  </div>
+ 
