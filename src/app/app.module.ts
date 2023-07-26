@@ -29,10 +29,15 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-
+import { MatIconModule } from '@angular/material/icon'; // Importez MatIconModule
+import { MatDialogModule } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { DialogOverviewExampleComponent } from './components/dialog-overview-example/dialog-overview-example.component';
+import { EditDialogComponentComponent } from './components/edit-dialog/edit-dialog-component.component';
+import { EditDialogCompteComponent } from './components/edit-dialog-compte/edit-dialog-compte.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +47,9 @@ import { MatInputModule } from '@angular/material/input';
     CompteDetailsComponent,
     ComptesListComponent,
     ListeClassesComponent,
+    DialogOverviewExampleComponent,
+    EditDialogComponentComponent,
+    EditDialogCompteComponent,
    
   ],
 
@@ -69,7 +77,7 @@ import { MatInputModule } from '@angular/material/input';
     MdbValidationModule,
 ReactiveFormsModule , 
 MatFormFieldModule,
-MatInputModule
+MatInputModule,MatIconModule,MatDialogModule
     
     
   ],

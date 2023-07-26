@@ -1,4 +1,5 @@
 <div>
+  <form (ngSubmit)="saveCompte()">
     <div class="submit-form">
       <div *ngIf="!submitted">
         
@@ -24,8 +25,8 @@
         </div>
        
           <div>
-            <label class="form-label" for="type_class">Numéro classe</label>
-            <input class="form-input" id="type_class" name="type_class" [(ngModel)]="Compte.type_class" required>
+            <label class="form-label" for="classe_id">Numéro classe</label>
+            <input class="form-input" id="classe_id" name="classe_id" [(ngModel)]="Compte.classe_id" required>
           </div>
           <div>
             <label class="form-label" for="description">Description:</label>
@@ -39,13 +40,11 @@
           </div>
           
           
-        <button center (click)="saveCompte()" class="form-button">Enregistrer</button>
+          <button  type="submit"  class="form-button">Enregistrer</button>
       </div>
   
-      <div *ngIf="submitted">
-        <h4>Compte was submitted successfully!</h4>
-        <button class="btn btn-success" (click)="newCompte()">Add</button>
-      </div>
+      
     </div>
+  </form>
   </div>
  

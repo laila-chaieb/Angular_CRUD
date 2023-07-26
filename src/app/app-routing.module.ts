@@ -7,17 +7,18 @@ import { ListeClassesComponent } from './components/liste-classes/liste-classes.
 import { IndexComponent } from './components/index/index.component';
 import { AddClasseComponent } from './components/add-classe/add-classe.component';
 
-
+import { DialogOverviewExampleComponent } from 'C:/Users/Lenovo/Desktop/crudCompte/src/app/components/dialog-overview-example/dialog-overview-example.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'Comptes', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'Comptes', component: ComptesListComponent },
   { path: 'Comptes/:id', component: CompteDetailsComponent },
   { path: 'classes', component: ListeClassesComponent },
   { path: 'home', component: IndexComponent },
   { path: 'addClass', component: AddClasseComponent },
   { path: 'add', component: AddCompteComponent },
+  { path: 'test', component: DialogOverviewExampleComponent },
   { path: '**', redirectTo: 'home' } // Redirection vers 'home' pour les chemins inconnus
 ];
 

@@ -1,6 +1,6 @@
-import { Component ,OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import {  Router ,ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Classe } from 'src/app/models//classe.model';
 import { ClasseService } from 'src/app/services/classe.service';
 
@@ -11,59 +11,74 @@ import { ClasseService } from 'src/app/services/classe.service';
 })
 export class AddClasseComponent implements OnInit {
   Classe: Classe = {
+    description: '',
     nom: '',
-    classeNum: '',
-    description: ''
+    numcl: '',
   };
-  text = new FormControl('', [Validators.required,Validators.pattern('[a-zA-Z]')]);
+  classes:any;
+  text = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z]')]);
 
   getErrorMessage() {
     if (this.text.hasError('required')) {
       return 'Champ Obligatoire *';
     }
-
     return this.text.hasError('text') ? 'Veuillez entrer une valeur valide' : '';
   }
+
   submitted = false;
-  constructor(private classeService: ClasseService,
-              private _router: Router,
-              private _activatedRoute: ActivatedRoute) { }
+  successMessage: string = '';
+  constructor(
+    private classeService: ClasseService,
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute
+  ) { }
 
-              classe: Classe = new Classe();
-
-              ngOnInit(): void {
-                const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
-                if (isIdPresent) {
-                  const idParam = this._activatedRoute.snapshot.paramMap.get('id');
-                  if (idParam !== null) {
-                    const id = +idParam;
-                    this.classeService.getClasse(id).subscribe(
-                      data => {
-                        this.classe = data;
-                      },
-                      error => {
-                        console.log('Une erreur s\'est produite lors de la récupération de la classe :', error);
-                        // Gérer l'erreur (afficher un message d'erreur, rediriger, etc.)
-                      }
-                    );
-                  }
-                }
-              }
-              
-             saveClasse() {
-       this.classeService.saveClasse(this.classe).subscribe( 
-      data => {
-        console.log('response', data);
-        this._router.navigateByUrl("/Classes");
+  ngOnInit(): void {
+    const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
+    if (isIdPresent) {
+      const idParam = this._activatedRoute.snapshot.paramMap.get('id');
+      if (idParam !== null) {
+        const id = +idParam;
+        this.classeService.getClasse(id).subscribe(
+          data => {
+            this.Classe = data;
+          },
+          error => {
+            console.log('Une erreur s\'est produite lors de la récupération de la classe :', error);
+            // Gérer l'erreur (afficher un message d'erreur, rediriger, etc.)
+          }
+        );
       }
+    }
+  }
+  listClasses(){
+ 
+    this.classeService.getClasses().subscribe((res:any) =>{
+      this.classes=res
+      console.log("reponse",this.classes)
+     
+    }
     )
   }
-  deleteClasse(id: number) {
-    this.classeService.deleteClasse(id).subscribe(
-      data => {
-        console.log('deleted response', data);
-        this._router.navigateByUrl('/Classes');
-      }
-    )
+
+  saveClasse(): void {
+    const data = {
+      description: this.Classe.description,
+      nom: this.Classe.nom,
+      numcl: this.Classe.numcl,
+    };
+
+    this.classeService.create(data).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.successMessage = 'La classe a été ajoutée avec succès.';
+        this.listClasses(); // Actualisez et rediriger vers liste
+        this._router.navigate(['/classes'], { queryParams: { success: this.successMessage } });
+
+      },
+      error: (e) => console.error(e)
+    });
   }
+
+  
 }
