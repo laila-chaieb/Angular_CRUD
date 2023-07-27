@@ -68,17 +68,16 @@ export class AddClasseComponent implements OnInit {
       numcl: this.Classe.numcl,
     };
 
-    this.classeService.create(data).subscribe({
+    this.classeService.create(this.Classe).subscribe({
       next: (res) => {
         console.log(res);
         this.successMessage = 'La classe a été ajoutée avec succès.';
-        this.listClasses(); // Actualisez et rediriger vers liste
-        this._router.navigate(['/classes'], { queryParams: { success: this.successMessage } });
+        this._router.navigate(['/']);
 
       },
       error: (e) => console.error(e)
     });
   }
-
+  
   
 }

@@ -46,4 +46,11 @@ export class CompteService {
       map(response => response)
     )
   }
+  getComptesByClasseId(classeId: number): Observable<Compte[]> {
+    const url = `${this.baseUrl}/byClasse/${classeId}`;
+    return this.http.get<Compte[]>(url).pipe(
+      map(response => response)
+    );
+  }
+ 
 }

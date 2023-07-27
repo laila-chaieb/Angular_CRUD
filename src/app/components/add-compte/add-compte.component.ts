@@ -26,6 +26,13 @@ export class AddCompteComponent implements OnInit {
     private _activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+     // Récupérer l'ID de la classe depuis les paramètres de l'URL
+     this._activatedRoute.queryParams.subscribe(params => {
+      const classe_id = params['classe_id'];
+      // Utiliser l'ID de la classe pour remplir automatiquement le champ "classe_id"
+      this.Compte.classe_id = classe_id;
+    });
+  
     const isIdPresent = this._activatedRoute.snapshot.paramMap.has('id');
     if (isIdPresent) {
       const idParam = this._activatedRoute.snapshot.paramMap.get('id');
@@ -53,25 +60,19 @@ export class AddCompteComponent implements OnInit {
     )
   }
 
-  saveCompte(): void {
-    const data = {
-     
-      classe_id: this.Compte.classe_id,
-      libele:  this.Compte.libele,
-      code: this.Compte.code,
-      description: this.Compte.description,
-      
-    };
-
-    this.CompteService.create(data).subscribe({
-      next: (res) => {
-        console.log(res);
-        // Affichez un message de succès (optionnel)
-        this.successMessage = 'La classe a été ajoutée avec succès.';
-        this.listComptes(); // Actualisez la liste des comptes après l'ajout
+  saveCompte() {
+    // Enregistrer le compte avec le champ "classe_id" rempli automatiquement
+    this.CompteService.create(this.Compte).subscribe(
+      (res) => {
+        console.log('Compte créé:', res);
+        // Rediriger vers la page d'index après l'enregistrement
+        this._router.navigate(['/']);
       },
-      error: (e) => console.error(e)
-    });
+      (error) => {
+        console.error('Erreur lors de la création du compte', error);
+      }
+    );
+  }
   }
 
   
@@ -80,4 +81,4 @@ export class AddCompteComponent implements OnInit {
 
   
 
-}
+

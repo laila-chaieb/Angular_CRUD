@@ -1,130 +1,42 @@
-  
-<button type="button" routerLink="/addClass" class="btn btn-outline-secondary" mdbRipple rippleColor="secondary"  >Ajouter Classe</button>
-<br>
-<br>
 <div class="row">
-<div class="col-md-4">
-  <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #B1FA6B">
-    <div class="card-header">Classe 1</div>
-    <div class="card-body">
-      <h6 class="card-title">Comptes de Capitaux</h6>
-      <p class="card-text">10. Capital et réserves</p>
-      <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-        <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="dark">Ajouter</button>
-        <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="dark">Consulter</button>
-        <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="dark">Modifier</button>
+  <div class="col-md-4" *ngFor="let classe of classes; let i = index">
+    <div class="card text-white mb-4" [style.background-color]="getCardColor(i)" style="max-width: 18rem;">
+      <div class="card-header">{{ classe.numcl }}</div>
+      <div class="card-body">
+        <h6 class="card-title">{{ classe.nom }}</h6>
+        <p class="card-text">{{ classe.description }}</p>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <button
+            type="button"
+            [routerLink]="['/add']"
+            [queryParams]="{ classe_id: classe.id }"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+          >
+            Ajouter
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+            (click)="viewCompteDetails(classe)"
+          >
+            Consulter
+          </button>
+          <button
+            type="button"
+            (click)="editClasse(classe.id)"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+          >
+            Modifier
+          </button>
+        </div>
+      </div>
     </div>
-       </div>
   </div>
 </div>
-  
-  
-  
-    <div class="col-md-4">
-      <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color:#90F88C;">
-        <div class="card-header">Classe 2</div>
-        <div class="card-body">
-          <h6 class="card-title">Comptes d'immobilisations</h6>
-          <p class="card-text">20. Immobilisations Incorporelles</p>
-          <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-            <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-            <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-            <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-        </div>
-           </div>
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color:#FFB86A;">
-        <div class="card-header">Classe 3</div>
-        <div class="card-body">
-          <h6 class="card-title">Comptes de Stocks</h6>
-          <p class="card-text">31. Matieres premiers</p>
-         
-          <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-            <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-            <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-            <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-        </div></div>
-          
-        </div>
-        
-      </div>
-      
-    </div>
-    <div class="row">      
-      <div class="col-md-4">
-        <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #FFD760;">
-          <div class="card-header">Classe 4</div>
-          <div class="card-body">
-            <h5 class="card-title">Comptes de Tiers</h5>
-            <p class="card-text">40. Fournisseurs</p>
-            <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-              <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-              <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-              <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-          </div>
-         </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #78E6E1;">
-          <div class="card-header">Classe 5</div>
-          <div class="card-body">
-            <h6 class="card-title">Comptes Financiers</h6>
-            <p class="card-text">50.Valeurs Mobilieres</p>
-            <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-              <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-              <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-              <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-          </div></div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #5ECAFE;">
-          <div class="card-header">Classe 6</div>
-          <div class="card-body">
-            <h6 class="card-title">Comptes De charhes</h6>
-            <p class="card-text">60. Achats</p>
-            <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-              <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-              <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-              <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-          </div> </div>
-        </div>
-      </div>
-      </div>
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-4">
-          <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #B591E6">
-            <div class="card-header">Classe 7</div>
-            <div class="card-body">
-              <h5 class="card-title">Comptes de Produits</h5>
-              <p class="card-text">70. Produits et marchandises</p>
-              <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-                <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-                <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-                <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-            </div>  </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card text-white  mb-3" style="max-width: 18rem;" style="background-color: #EE81FE;">
-            <div class="card-header">Classe 8</div>
-            <div class="card-body">
-              <h6 class="card-title">Comptes Speciaux</h6>
-              <p class="card-text">80.Engagements</p>
-              <div class="d-flex my-2"> <!-- Utilisation de la classe "my-2" pour ajouter de l'espace en haut et en bas -->
-                <button type="button" routerLink="/add" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Ajouter</button>
-                <button type="button" routerLink="/Comptes/:id" class="btn btn-outline-secondary btn-sm mr-2" mdbRipple rippleColor="secondary">Consulter</button>
-                <button type="button" routerLink="/modifier" class="btn btn-outline-secondary btn-sm" mdbRipple rippleColor="secondary">Modifier</button>
-            </div>    </div>
-          </div>
-        </div>
-        
-        </div>
-  
-  
-  
-  

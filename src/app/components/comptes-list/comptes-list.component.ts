@@ -53,8 +53,7 @@ export class ComptesListComponent {
       () => {
         
         console.log('Compte deleted successfully');
-        this.listComptes(); // Actualisez la liste des Comptes après la suppression
-      },
+        this.router.navigate(['/']);      },
       error => {
         console.error('Error deleting Compte', error);
       }
@@ -86,7 +85,8 @@ export class ComptesListComponent {
       (updatedCompte) => {
         console.log('Classe updated:', updatedCompte);
         // Effectuez les actions nécessaires après la mise à jour de la classe
-      },
+        this.router.navigate(['/']);      },
+     
       (error) => {
         console.error('Error updating compte', error);
         // Affichez un message d'erreur

@@ -4,6 +4,7 @@ import { ClasseService } from 'src/app/services/classe.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import {  EditDialogComponentComponent } from '../edit-dialog/edit-dialog-component.component';
+import { CompteService } from 'src/app/services/compte.service';
 
 
 
@@ -16,11 +17,12 @@ import {  EditDialogComponentComponent } from '../edit-dialog/edit-dialog-compon
 export class ListeClassesComponent implements OnInit {
   constructor(private classeService: ClasseService,
     private activatedRoute: ActivatedRoute , private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,private  compteService:CompteService
    
  ) { }
   selectedClasse: Classe = new Classe();
   classes:any;
+  comptes: any;
   isEditing: boolean = false;
   filters = {
     keyword: '',
@@ -51,12 +53,22 @@ export class ListeClassesComponent implements OnInit {
   
     this.listClasses();
   }
+  consulterComptes(classeId: number) {
+    this.compteService.getComptesByClasseId(classeId).subscribe(
+      (comptes) => {
+        this.comptes = comptes;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des comptes', error);
+      }
+    );
+  }
 
   deleteClasse(id: number) {
     this.classeService.delete(id).subscribe(
       () => {
         console.log('Classe deleted successfully');
-        this.listClasses(); // Actualisez la liste des classes après la suppression
+        this.router.navigate(['/']);// Actualisez la liste des classes après la suppression
       },
       error => {
         console.error('Error deleting classe', error);
@@ -68,13 +80,14 @@ export class ListeClassesComponent implements OnInit {
       (classe) => {
         this.selectedClasse = classe;
         const dialogRef = this.dialog.open(EditDialogComponentComponent, {
-          width: '300px',
+          width: '400px',
           data: { ...this.selectedClasse } // Passez une copie des données pour éviter les problèmes de référence
         });
 
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.updateClasse(result);
+            this.router.navigate(['/']);
           }
         });
       },
@@ -89,6 +102,7 @@ export class ListeClassesComponent implements OnInit {
       (updatedClasse) => {
         console.log('Classe updated:', updatedClasse);
         // Effectuez les actions nécessaires après la mise à jour de la classe
+        this.router.navigate(['/']);
       },
       (error) => {
         console.error('Error updating classe', error);
