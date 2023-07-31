@@ -4,6 +4,7 @@ import { Compte } from 'src/app/models/compte.model';
 import { CompteService } from 'src/app/services/compte.service';
 import { EditDialogCompteComponent } from '../edit-dialog-compte/edit-dialog-compte.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-comptes-list',
@@ -25,7 +26,13 @@ export class ComptesListComponent {
   }
   successMessage: string = '';
 
-  
+   updatedCompte: Compte = {
+    id: this.selectedCompte.id,
+    libele: this.selectedCompte.libele,
+    code: this.selectedCompte.code,
+    description: this.selectedCompte.description,
+    classe_id: this.selectedCompte.classe_id // Assurez-vous d'inclure classe_id
+  };
   
   listComptes(){
  
@@ -41,6 +48,7 @@ export class ComptesListComponent {
       const successMessage = params['success'];
       if (successMessage) {
         console.log(successMessage);
+        this.listComptes();
         // Affichez le message de succès dans votre template ou effectuez les actions nécessaires
       }
     });
@@ -51,14 +59,17 @@ export class ComptesListComponent {
   deleteCompte(id: number) {
     this.compteService.delete(id).subscribe(
       () => {
-        
-        console.log('Compte deleted successfully');
-        this.router.navigate(['/']);      },
-      error => {
-        console.error('Error deleting Compte', error);
+        console.log("Compte deleted successfully.");
+        this.listComptes();
+        // Add any additional actions you want to perform after successful deletion.
+        this.router.navigate(['/Comptes']);
+      },
+      (error: HttpErrorResponse) => {
+        console.error("Error deleting Compte:", error);
       }
     );
   }
+ 
   editCompte(id: number) {
     this.compteService.getCompte(id).subscribe(
       (compte) => {
@@ -84,6 +95,7 @@ export class ComptesListComponent {
     this.compteService.update(updatedCompte.id, updatedCompte).subscribe(
       (updatedCompte) => {
         console.log('Classe updated:', updatedCompte);
+        this.listComptes();
         // Effectuez les actions nécessaires après la mise à jour de la classe
         this.router.navigate(['/']);      },
      

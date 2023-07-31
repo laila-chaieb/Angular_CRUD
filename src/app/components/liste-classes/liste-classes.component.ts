@@ -68,7 +68,8 @@ export class ListeClassesComponent implements OnInit {
     this.classeService.delete(id).subscribe(
       () => {
         console.log('Classe deleted successfully');
-        this.router.navigate(['/']);// Actualisez la liste des classes après la suppression
+        this.listClasses();
+        this.router.navigate(['/Classes']);// Actualisez la liste des classes après la suppression
       },
       error => {
         console.error('Error deleting classe', error);
@@ -87,7 +88,8 @@ export class ListeClassesComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.updateClasse(result);
-            this.router.navigate(['/']);
+            this.listClasses();
+            this.router.navigate(['/Classes']);
           }
         });
       },
@@ -101,8 +103,9 @@ export class ListeClassesComponent implements OnInit {
     this.classeService.update(updatedClasse.id, updatedClasse).subscribe(
       (updatedClasse) => {
         console.log('Classe updated:', updatedClasse);
+        this.listClasses();
         // Effectuez les actions nécessaires après la mise à jour de la classe
-        this.router.navigate(['/']);
+        this.router.navigate(['/Classes']);
       },
       (error) => {
         console.error('Error updating classe', error);

@@ -6,6 +6,7 @@ import { CompteService } from 'src/app/services/compte.service';
 import { EditDialogCompteComponent } from '../edit-dialog-compte/edit-dialog-compte.component';
 import { Classe } from 'src/app/models/classe.model';
 import { ClasseService } from 'src/app/services/classe.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-compte-details',
@@ -14,7 +15,7 @@ import { ClasseService } from 'src/app/services/classe.service';
 })
 export class CompteDetailsComponent {
   constructor(private  compteService:CompteService, private activatedRoute: ActivatedRoute ,
-    private router: Router,public dialog: MatDialog ,   private classeService: ClasseService,) {
+    private router: Router,public dialog: MatDialog ,   private classeService: ClasseService,private http: HttpClient) {
       const state = this.router.getCurrentNavigation()?.extras?.state;
       this.selectedClasseColor = state?.['couleur'];
 
@@ -37,53 +38,41 @@ export class CompteDetailsComponent {
       }
       )
     }
- ngOnInit(): void {
-  this.activatedRoute.params.subscribe(params => {
-    const classeId = +params['id'];
-
-    // Récupérer les détails de la classe depuis le service
-    this.classeService.getClasse(classeId).subscribe(
-      (classe) => {
-        this.selectedClasse = classe;
-        this.selectedClasseColor = this.selectedClasse ? CompteDetailsComponent.couleurs[(this.selectedClasse.id || 1) - 1] : CompteDetailsComponent.couleurs[0];
-
-        // Charger les comptes de la classe avec l'ID correspondant
-        this.listComptes(); // Utilisez fetchComptes() au lieu de loadComptesByClasseId()
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des détails de la classe', error);
-      }
-    );
-  });
+    ngOnInit(): void {
+      this.activatedRoute.params.subscribe(params => {
+        const classeId = +params['id'];
   
-}
-
-
-fetchComptes(): void {
-  if (this.selectedClasse && this.selectedClasse.id) {
-    this.compteService.getComptesByClasseId(this.selectedClasse.id).subscribe(
-      (comptes: Compte[]) => {
-        this.comptes = comptes;
-      },
-      (error) => {
-        console.error('Erreur lors du chargement des comptes', error);
-      }
-    );
-  }
-}
-
-
-loadComptesByClasseId(classeId: number) {
-  // Utiliser le service pour charger les comptes avec l'ID de la classe
-  this.compteService.getComptesByClasseId(classeId).subscribe(
-    (comptes) => {
-      this.comptes = comptes;
-    },
-    (error) => {
-      console.error('Erreur lors du chargement des comptes', error);
+        // Récupérer les détails de la classe depuis le service
+        this.classeService.getClasse(classeId).subscribe(
+          (classe) => {
+            this.selectedClasse = classe;
+            this.selectedClasseColor = this.selectedClasse ? CompteDetailsComponent.couleurs[(this.selectedClasse.id || 1) - 1] : CompteDetailsComponent.couleurs[0];
+  
+            // Charger les comptes de la classe avec l'ID correspondant
+            this.fetchComptes(classeId); // Utilisez fetchComptes() au lieu de loadComptesByClasseId()
+          },
+          (error) => {
+            console.error('Erreur lors du chargement des détails de la classe', error);
+          }
+        );
+      });
     }
-  );
-}
+
+
+    fetchComptes(classeId: number): void {
+      const url = `http://localhost:8080/api/v1/test/byClasse/${classeId}`;
+      this.http.get<any[]>(url).subscribe(
+        (comptes) => {
+          this.comptes = comptes;
+        },
+        (error) => {
+          console.error('Erreur lors du chargement des comptes', error);
+        }
+      );
+    }
+  
+
+
 editCompte(id: number) {
  this.compteService.getCompte(id).subscribe(
    (compte) => {

@@ -67,17 +67,17 @@ export class AddClasseComponent implements OnInit {
       nom: this.Classe.nom,
       numcl: this.Classe.numcl,
     };
-
-    this.classeService.create(this.Classe).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.successMessage = 'La classe a été ajoutée avec succès.';
-        this._router.navigate(['/']);
-
-      },
-      error: (e) => console.error(e)
-    });
-  }
+  
+    this.classeService.create(data).subscribe((res) => {
+      console.log('Compte créé:', res);
+      this.listClasses();
+      // Rediriger vers la page d'index après l'enregistrement
+      this._router.navigate(['/classes']);
+    },(error) => {
+      console.error('Erreur lors de la création du classe', error);
+    }
+  );
+}
   
   
 }

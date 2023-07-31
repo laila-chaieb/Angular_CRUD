@@ -24,11 +24,10 @@
       <td>{{Compte.libele}}</td>
       <td>{{Compte.description}}</td>
       <td>
-        <button class="btn btn-danger" (click)="deleteCompte(Compte.id)">Delete</button>
-        
-        <button class="btn btn-primary" (click)="editCompte(Compte.id)">Edit</button>
-       
-       
+        <div class="button-container">
+          <button class="btn btn-danger" (click)="deleteCompte(Compte.id)">Delete</button>
+          <button class="btn btn-primary" (click)="editCompte(Compte.id)">Edit</button>
+        </div>
       </td>
     </tr>
   </tbody>

@@ -2,6 +2,6 @@ export class Compte {
   id?: any;
   code?: String;
   libele?: string;
-  classe_id?: any;
+  classe_id?: number;
   description?: string;
 }

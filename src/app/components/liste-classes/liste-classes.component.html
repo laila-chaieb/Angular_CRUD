@@ -22,12 +22,12 @@
       <td>{{Classe.numcl}}</td>
       <td>{{Classe.nom}}</td>
       <td>{{Classe.description}}</td>
+      
       <td>
-        <button class="btn btn-danger" (click)="deleteClasse(Classe.id)">Delete</button>
-        
-        <button class="btn btn-primary" (click)="editClasse(Classe.id)">Edit</button>
-       
-       
+        <div class="button-container">
+          <button class="btn btn-danger" (click)="deleteClasse(Classe.id)">Delete</button>
+          <button class="btn btn-primary" (click)="editClasse(Classe.id)">Edit</button>
+        </div>
       </td>
     </tr>
   </tbody>

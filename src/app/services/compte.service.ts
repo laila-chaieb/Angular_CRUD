@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable,forkJoin } from 'rxjs';
+import { map ,mergeMap} from 'rxjs/operators';
 import { Compte } from '../models/compte.model';
 
 @Injectable({
@@ -17,10 +17,34 @@ export class CompteService {
     );
   }
 
-  create(data: any): Observable<Compte> {
-    return this.http.post<Compte>(this.baseUrl, data).pipe(
+   // Nouvelle méthode pour obtenir une classe par son ID
+   getClassById(id: number): Observable<any> {
+    const url = `http://localhost:8080/api/v1/test/classes/${id}`;
+    return this.http.get<any>(url).pipe(
       map(response => response)
     );
+  }
+
+  create(data: any): Observable<Compte> {
+    // Obtenez l'objet complet de la classe à partir de l'ID
+    const classeId = data.classe_id;
+    delete data.classe_id; // Supprimez la propriété classe_id du compte avant l'envoi
+    if (classeId) {
+      // Utilisez forkJoin pour combiner les deux observables
+      return forkJoin([this.getClassById(classeId)]).pipe(
+        // Utilisez mergeMap pour accéder aux résultats du forkJoin
+        mergeMap(([classe]: any) => {
+          data.classe = classe; // Ajoutez l'objet complet de la classe au compte
+          // Envoie la requête POST pour créer le compte avec la classe associée
+          return this.http.post<Compte>(this.baseUrl, data);
+        })
+      );
+    } else {
+      // Si classe_id n'est pas spécifié, envoyez simplement la requête POST sans la classe associée
+      return this.http.post<Compte>(this.baseUrl, data).pipe(
+        map(response => response)
+      );
+    }
   }
 
   update(id: any, data: any): Observable<Compte> {

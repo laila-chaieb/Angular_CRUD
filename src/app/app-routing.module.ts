@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'Comptes', component: ComptesListComponent },
   { path: 'Comptes/:id', component: CompteDetailsComponent },
-  { path: 'classes', component: ListeClassesComponent },
+  { path: 'Classes', component: ListeClassesComponent },
   { path: 'home', component: IndexComponent },
   { path: 'addClass', component: AddClasseComponent },
   { path: 'add', component: AddCompteComponent },
