@@ -7,9 +7,9 @@
       
         
         <div class="form-group">
-          <label class="form-label" for="nom">Nom :</label>
+          <label class="form-label" for="nom">Nom De Classe:</label>
           <input matNativeControl class="form-input" id="nom" required [(ngModel)]="Classe.nom" name="nom" [formControl]="text"/>
-          <mat-error *ngIf="text.invalid">{{getErrorMessage()}}</mat-error>
+      
         </div>
         <div class="form-group">
           <label class="form-label" for="numcl">Numéro de classe :</label>

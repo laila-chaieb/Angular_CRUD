@@ -20,7 +20,7 @@ export class AddClasseComponent implements OnInit {
 
   getErrorMessage() {
     if (this.text.hasError('required')) {
-      return 'Champ Obligatoire *';
+      return '';
     }
     return this.text.hasError('text') ? 'Veuillez entrer une valeur valide' : '';
   }

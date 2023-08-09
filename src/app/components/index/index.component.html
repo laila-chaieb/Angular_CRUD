@@ -7,6 +7,16 @@
         <p class="card-text">{{ classe.description }}</p>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
+          
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-small" 
+            mdbRipple
+            rippleColor="secondary"
+            (click)="viewCompteDetails(classe)"
+          >
+            Consulter
+          </button>
           <button
             type="button"
             [routerLink]="['/add']"
@@ -16,15 +26,6 @@
             rippleColor="secondary"
           >
             Ajouter
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-secondary btn-small" 
-            mdbRipple
-            rippleColor="secondary"
-            (click)="viewCompteDetails(classe)"
-          >
-            Consulter
           </button>
           <button
             type="button"
